@@ -8,6 +8,12 @@
     <strong>{{ reserva.equipamento.nome }}</strong>
     <span>{{ reserva.inicio|date:"d/m/Y H:i" }} a {{ reserva.fim|date:"d/m/Y H:i" }} (UTC)</span>
     <span>{{ reserva.get_estado_display }}</span>
+    {% if reserva.estado == "ativa" and reserva.inicio > agora %}
+    <form method="post" action="{% url 'cancelar_reserva' reserva.pk %}">
+      {% csrf_token %}
+      <button type="submit">Cancelar reserva de {{ reserva.equipamento.nome }}</button>
+    </form>
+    {% endif %}
   </li>
   {% empty %}
   <li>Você ainda não tem reservas.</li>

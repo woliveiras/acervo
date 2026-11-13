@@ -1,6 +1,6 @@
-# Acervo — C00
+# Acervo — C01
 
-Ponto de partida do laboratório do livro *Trabalhando com agentes de IA*. O projeto usa Python 3.13, Django 5.2.19 e PostgreSQL 18.7. Você precisa de Git e Docker com Compose, com o serviço do Docker em execução.
+Solução de referência do laboratório de cancelamento do livro *Trabalhando com agentes de IA*. O projeto usa Python 3.13, Django 5.2.19 e PostgreSQL 18.7. Você precisa de Git e Docker com Compose, com o serviço do Docker em execução.
 
 Dentro da pasta do Acervo, execute:
 
@@ -20,3 +20,9 @@ ACERVO_PORT=8001 docker compose up -d --build --wait
 ```
 
 Para parar os serviços preservando o banco, execute `docker compose down`. Para recomeçar com o banco vazio, execute `docker compose down --volumes` **na pasta do laboratório** e repita a preparação. Esse comando apaga os dados locais do projeto Compose.
+
+## Conferir o cancelamento
+
+Entre como Ana e use Tab até o botão **Cancelar reserva de Projetor**. Pressione Enter. A mensagem de confirmação deve aparecer e a reserva deve continuar na lista como **Cancelada**. A reserva do passado não tem botão. Ao entrar como Bruno, você verá apenas as reservas dessa conta.
+
+A suíte automatizada também verifica a regra no servidor, o instante exato do início, a preservação do mesmo registro e a repetição da solicitação. Rode `docker compose exec web python manage.py test` para conferir.

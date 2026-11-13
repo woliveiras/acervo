@@ -21,6 +21,13 @@
   </nav>
   <p>Conta: {{ user.username }}</p>
   {% endif %}
-  <main>{% block conteudo %}{% endblock %}</main>
+  <main>
+    {% if messages %}
+    <ul aria-label="Resultado da operação" role="status">
+      {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+    {% block conteudo %}{% endblock %}
+  </main>
 </body>
 </html>
