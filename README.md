@@ -1,23 +1,22 @@
-# Acervo
+# Acervo — C00
 
-Projeto prático do livro *Trabalhando com agentes de IA*, de William Oliveira. O Acervo é uma aplicação de reservas e empréstimos de equipamentos.
+Ponto de partida do laboratório do livro *Trabalhando com agentes de IA*. O projeto usa Python 3.13, Django 5.2.19 e PostgreSQL 18.7. Você precisa de Git e Docker com Compose, com o serviço do Docker em execução.
 
-| Capítulo | Branch | O que você encontra |
-| --- | --- | --- |
-| 1 | — | O exemplo pode ser acompanhado no livro. |
-| 2 | [c00](https://github.com/woliveiras/acervo/tree/c00) | Protótipo com autenticação, catálogo e reservas de exemplo. |
-| 3 | [c00](https://github.com/woliveiras/acervo/tree/c00) → [c01](https://github.com/woliveiras/acervo/tree/c01) | Ponto de partida do exercício e solução de referência para o cancelamento. |
-
-Para começar o exercício, clone o repositório e crie uma branch sua a partir de C00.
+Dentro da pasta do Acervo, execute:
 
 ```sh
-git clone https://github.com/woliveiras/acervo.git
-cd acervo
-git switch -c meu-cancelamento origin/c00
+docker compose up -d --build --wait
+docker compose exec web python manage.py migrate
+docker compose exec web python manage.py dados_demo
+docker compose exec web python manage.py test
 ```
 
-Siga o README da branch que você abriu para rodar a aplicação. Depois do exercício, clone C01 em outra pasta se quiser executar a solução mantendo a sua tentativa.
+Abra http://127.0.0.1:8000. Entre como `ana` ou `bruno`, com a senha `acervo-demo`. Ana tem um projetor reservado para o futuro e um notebook no passado. Bruno tem uma reserva futura de notebook. A lista mostra apenas as reservas da conta ativa. O catálogo mostra os dois equipamentos.
+
+Os horários aparecem em UTC. O comando `dados_demo` mantém as reservas já criadas. Use uma pasta com nome diferente para executar outro checkpoint em paralelo e escolha uma porta livre com `ACERVO_PORT`. Por exemplo, com Bash ou Zsh:
 
 ```sh
-git clone --branch c01 https://github.com/woliveiras/acervo.git acervo-c01
+ACERVO_PORT=8001 docker compose up -d --build --wait
 ```
+
+Para parar os serviços preservando o banco, execute `docker compose down`. Para recomeçar com o banco vazio, execute `docker compose down --volumes` **na pasta do laboratório** e repita a preparação. Esse comando apaga os dados locais do projeto Compose.

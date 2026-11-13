@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block titulo %}Minhas reservas · Acervo{% endblock %}
+{% block conteudo %}
+<h1>Minhas reservas</h1>
+<ul>
+  {% for reserva in reservas %}
+  <li>
+    <strong>{{ reserva.equipamento.nome }}</strong>
+    <span>{{ reserva.inicio|date:"d/m/Y H:i" }} a {{ reserva.fim|date:"d/m/Y H:i" }} (UTC)</span>
+    <span>{{ reserva.get_estado_display }}</span>
+  </li>
+  {% empty %}
+  <li>Você ainda não tem reservas.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

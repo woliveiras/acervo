@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block titulo %}Catálogo · Acervo{% endblock %}
+{% block conteudo %}
+<h1>Catálogo</h1>
+<ul>
+  {% for equipamento in equipamentos %}
+  <li>{{ equipamento.nome }}</li>
+  {% empty %}
+  <li>O catálogo ainda está vazio.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

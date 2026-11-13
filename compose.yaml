@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:18.7
+    environment:
+      POSTGRES_DB: acervo
+      POSTGRES_USER: acervo
+      POSTGRES_PASSWORD: acervo-local
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U acervo -d acervo"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - postgres:/var/lib/postgresql
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_DB: acervo
+      POSTGRES_USER: acervo
+      POSTGRES_PASSWORD: acervo-local
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${ACERVO_PORT:-8000}:8000"
+    volumes:
+      - .:/app
+volumes:
+  postgres:

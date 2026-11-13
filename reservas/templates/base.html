@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Acervo{% endblock %}</title>
+  <style>
+    body { font: 1rem/1.55 system-ui, sans-serif; max-width: 48rem; margin: 2rem auto; padding: 0 1rem; color: #20252b; }
+    nav { display: flex; flex-wrap: wrap; gap: 1rem; align-items: baseline; }
+    button, input { font: inherit; }
+    :focus-visible { outline: 3px solid #2058a5; outline-offset: 3px; }
+    li { margin-block: .6rem; }
+  </style>
+</head>
+<body>
+  {% if user.is_authenticated %}
+  <nav aria-label="Acervo">
+    <a href="{% url 'reservas' %}">Minhas reservas</a>
+    <a href="{% url 'catalogo' %}">Catálogo</a>
+    <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit">Sair</button></form>
+  </nav>
+  <p>Conta: {{ user.username }}</p>
+  {% endif %}
+  <main>{% block conteudo %}{% endblock %}</main>
+</body>
+</html>
